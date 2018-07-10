@@ -5,12 +5,12 @@
  * @license http://www.tintsoft.com/license/
  */
 
-namespace XuTL\QCloud\Cmq\Requests;
+namespace XuTL\QCloud\Cmq\Responses;
 
 
-use XuTL\QCloud\Cmq\Http\BaseRequest;
+use XuTL\QCloud\Cmq\Http\BaseResponse;
 
-class PeekMessageRequest extends BaseRequest
+class DeleteMessageResponse extends BaseResponse
 {
 
 }

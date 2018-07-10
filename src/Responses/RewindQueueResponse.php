@@ -10,7 +10,7 @@ namespace XuTL\QCloud\Cmq\Responses;
 
 use XuTL\QCloud\Cmq\Http\BaseResponse;
 
-class PeekMessageResponse extends BaseResponse
+class RewindQueueResponse extends BaseResponse
 {
 
 }

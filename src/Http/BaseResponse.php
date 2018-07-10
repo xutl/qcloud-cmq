@@ -30,6 +30,8 @@ abstract class BaseResponse
 
     protected $codeDesc;
 
+    public $clientRequestId;
+
     protected $_content = [];
 
     /**

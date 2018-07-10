@@ -10,17 +10,19 @@ namespace XuTL\QCloud\Cmq\Requests;
 
 use XuTL\QCloud\Cmq\Http\BaseRequest;
 
-class ReceiveMessageRequest extends BaseRequest
+class RewindQueueRequest extends BaseRequest
 {
+    private $queueName;
+
     /**
      * CreateQueueRequest constructor.
      * @param string $queueName
-     * @param int $pollingWaitSeconds
      */
     public function __construct($queueName)
     {
-        parent::__construct('ReceiveMessage');
+        parent::__construct('RewindQueue');
         $this->setQueueName($queueName);
+        $this->queueName = $queueName;
     }
 
     /**
@@ -35,13 +37,14 @@ class ReceiveMessageRequest extends BaseRequest
     }
 
     /**
-     * 本次请求的长轮询等待时间。取值范围 0-30 秒，如果不设置该参数，则默认使用队列属性中的 pollingWaitSeconds 值。
-     * @param string $pollingWaitSeconds
+     * 设定该时间，则（Batch）receiveMessage 接口，会按照生产消息的先后顺序消费该时间戳以后的消息。
+     * @param string $startConsumeTime
      * @return BaseRequest
      */
-    public function setPollingWaitSeconds($pollingWaitSeconds)
+    public function setStartConsumeTime($startConsumeTime)
     {
-        $this->setParameter('pollingWaitSeconds', $pollingWaitSeconds);
+        $this->setParameter('startConsumeTime', $startConsumeTime);
         return $this;
     }
+
 }

@@ -10,17 +10,18 @@ namespace XuTL\QCloud\Cmq\Requests;
 
 use XuTL\QCloud\Cmq\Http\BaseRequest;
 
-class ReceiveMessageRequest extends BaseRequest
+class DeleteMessageRequest extends BaseRequest
 {
     /**
      * CreateQueueRequest constructor.
      * @param string $queueName
-     * @param int $pollingWaitSeconds
+     * @param string $receiptHandle
      */
-    public function __construct($queueName)
+    public function __construct($queueName, $receiptHandle)
     {
-        parent::__construct('ReceiveMessage');
-        $this->setQueueName($queueName);
+        parent::__construct('DeleteMessage');
+        $this->setParameter('queueName', $queueName);
+        $this->setParameter('receiptHandle', $receiptHandle);
     }
 
     /**
@@ -34,14 +35,9 @@ class ReceiveMessageRequest extends BaseRequest
         return $this;
     }
 
-    /**
-     * 本次请求的长轮询等待时间。取值范围 0-30 秒，如果不设置该参数，则默认使用队列属性中的 pollingWaitSeconds 值。
-     * @param string $pollingWaitSeconds
-     * @return BaseRequest
-     */
-    public function setPollingWaitSeconds($pollingWaitSeconds)
+    public function setReceiptHandle($receiptHandle)
     {
-        $this->setParameter('pollingWaitSeconds', $pollingWaitSeconds);
+        $this->setParameter('receiptHandle', $receiptHandle);
         return $this;
     }
 }

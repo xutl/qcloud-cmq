@@ -8,11 +8,12 @@
 namespace XuTL\QCloud\Cmq;
 
 use XuTL\QCloud\Cmq\Http\HttpClient;
+use XuTL\QCloud\Cmq\Requests\DeleteMessageRequest;
 use XuTL\QCloud\Cmq\Requests\GetQueueAttributeRequest;
-use XuTL\QCloud\Cmq\Requests\PeekMessageRequest;
 use XuTL\QCloud\Cmq\Requests\ReceiveMessageRequest;
 use XuTL\QCloud\Cmq\Requests\SendMessageRequest;
 use XuTL\QCloud\Cmq\Requests\SetQueueAttributeRequest;
+use XuTL\QCloud\Cmq\Responses\DeleteMessageResponse;
 use XuTL\QCloud\Cmq\Responses\GetQueueAttributeResponse;
 use XuTL\QCloud\Cmq\Responses\ReceiveMessageResponse;
 use XuTL\QCloud\Cmq\Responses\SendMessageResponse;
@@ -55,7 +56,7 @@ class Queue
 
     /**
      * @param SetQueueAttributeRequest $request
-     * @return Http\BaseResponse
+     * @return Http\BaseResponse|SetQueueAttributeResponse
      */
     public function setAttribute(SetQueueAttributeRequest $request)
     {
@@ -77,7 +78,7 @@ class Queue
     }
 
     /**
-     * @return Http\BaseResponse
+     * @return Http\BaseResponse|GetQueueAttributeResponse
      */
     public function getAttribute()
     {
@@ -86,6 +87,10 @@ class Queue
         return $this->client->sendRequest($request, $response);
     }
 
+    /**
+     * @param AsyncCallback|null $callback
+     * @return Http\Promise
+     */
     public function getAttributeAsync(AsyncCallback $callback = null)
     {
         $request = new GetQueueAttributeRequest($this->queueName);
@@ -96,7 +101,7 @@ class Queue
     /**
      * 向队列推送消息
      * @param SendMessageRequest $request
-     * @return Http\BaseResponse
+     * @return Http\BaseResponse|SendMessageResponse
      */
     public function sendMessage(SendMessageRequest $request)
     {
@@ -118,25 +123,22 @@ class Queue
         return $this->client->sendRequestAsync($request, $response, $callback);
     }
 
-    public function peekMessage()
+    /**
+     * @param null $waitSeconds
+     * @return Http\BaseResponse|ReceiveMessageResponse
+     */
+    public function receiveMessage($waitSeconds = null)
     {
-        $request = new PeekMessageRequest($this->queueName);
-        return $this->client->sendRequest($request, $response);
-    }
-
-    public function peekMessageAsync(AsyncCallback $callback = NULL)
-    {
-        $request = new PeekMessageRequest($this->queueName);
-        return $this->client->sendRequestAsync($request, $response, $callback);
-    }
-
-    public function receiveMessage($waitSeconds = NULL)
-    {
-        $request = new ReceiveMessageRequest($this->queueName, $waitSeconds);
+        $request = new ReceiveMessageRequest($this->queueName);
+        if ($waitSeconds != null) $request->setPollingWaitSeconds($waitSeconds);
         $response = new ReceiveMessageResponse();
         return $this->client->sendRequest($request, $response);
     }
 
+    /**
+     * @param AsyncCallback|NULL $callback
+     * @return Http\Promise
+     */
     public function receiveMessageAsync(AsyncCallback $callback = NULL)
     {
         $request = new ReceiveMessageRequest($this->queueName);
@@ -144,6 +146,10 @@ class Queue
         return $this->client->sendRequestAsync($request, $response, $callback);
     }
 
+    /**
+     * @param $receiptHandle
+     * @return Http\BaseResponse|DeleteMessageResponse
+     */
     public function deleteMessage($receiptHandle)
     {
         $request = new DeleteMessageRequest($this->queueName, $receiptHandle);
@@ -151,17 +157,15 @@ class Queue
         return $this->client->sendRequest($request, $response);
     }
 
+    /**
+     * @param $receiptHandle
+     * @param AsyncCallback|NULL $callback
+     * @return Http\Promise
+     */
     public function deleteMessageAsync($receiptHandle, AsyncCallback $callback = NULL)
     {
         $request = new DeleteMessageRequest($this->queueName, $receiptHandle);
         $response = new DeleteMessageResponse();
         return $this->client->sendRequestAsync($request, $response, $callback);
-    }
-
-    public function changeMessageVisibility($receiptHandle, $visibilityTimeout)
-    {
-        $request = new ChangeMessageVisibilityRequest($this->queueName, $receiptHandle, $visibilityTimeout);
-        $response = new ChangeMessageVisibilityResponse();
-        return $this->client->sendRequest($request, $response);
     }
 }

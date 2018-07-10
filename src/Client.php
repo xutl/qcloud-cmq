@@ -11,9 +11,11 @@ use XuTL\QCloud\Cmq\Http\HttpClient;
 use XuTL\QCloud\Cmq\Requests\CreateQueueRequest;
 use XuTL\QCloud\Cmq\Requests\DeleteQueueRequest;
 use XuTL\QCloud\Cmq\Requests\ListQueueRequest;
+use XuTL\QCloud\Cmq\Requests\RewindQueueRequest;
 use XuTL\QCloud\Cmq\Responses\CreateQueueResponse;
 use XuTL\QCloud\Cmq\Responses\DeleteQueueResponse;
 use XuTL\QCloud\Cmq\Responses\ListQueueResponse;
+use XuTL\QCloud\Cmq\Responses\RewindQueueResponse;
 
 /**
  * Class Client
@@ -56,6 +58,14 @@ class Client
     public function getQueueRef($queueName)
     {
         return new Queue($this->client, $queueName);
+    }
+
+    public function rewindQueue($queueName, $startConsumeTime)
+    {
+        $request = new  RewindQueueRequest($queueName);
+        $request->setStartConsumeTime($startConsumeTime);
+        $response = new RewindQueueResponse($queueName);
+        return $this->client->sendRequest($request, $response);
     }
 
     /**
