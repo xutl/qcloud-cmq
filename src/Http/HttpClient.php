@@ -13,6 +13,7 @@ use XuTL\QCloud\Cmq\Config;
 use Psr\Http\Message\ResponseInterface;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Exception\TransferException;
+use XuTL\QCloud\Cmq\Exception\ClientParameterException;
 
 /**
  * Class HttpClient
@@ -55,6 +56,7 @@ class HttpClient
      * @var string
      */
     public $requestPath = '/v2/index.php';
+    public $requestMethod = 'POST';
 
     /**
      * @var string
@@ -63,6 +65,7 @@ class HttpClient
 
     private $requestTimeout;
     private $connectTimeout;
+
 
     /**
      * HttpClient constructor.
@@ -166,9 +169,8 @@ class HttpClient
         $params['Nonce'] = uniqid();
         $params['Timestamp'] = time();
         $params['SignatureMethod'] = $this->signatureMethod;
-
-        $plainText = $this->makeSignPlainText($params, 'POST', $this->endPoint, $this->requestPath);
-
+        $host = str_replace(['http://', 'https://'], '', $this->endPoint);
+        $plainText = $this->makeSignPlainText($params, $this->requestMethod, $host, $this->requestPath);
         //签名
         if ($this->signatureMethod == self::SIGNATURE_METHOD_HMAC_SHA256) {
             $params['Signature'] = base64_encode(hash_hmac('sha256', $plainText, $this->secretKey, true));
@@ -185,7 +187,7 @@ class HttpClient
      * @param AsyncCallback|NULL $callback
      * @return Promise
      */
-    public function sendRequestAsync(BaseRequest $request, BaseResponse &$response, AsyncCallback $callback = NULL)
+    public function sendRequestAsync(BaseRequest $request, BaseResponse &$response, AsyncCallback $callback = null)
     {
         $promise = $this->sendRequestAsyncInternal($request, $response, $callback);
         return new Promise($promise, $response);
@@ -216,12 +218,14 @@ class HttpClient
         $options['form_params'] = $this->buildRequestBody($request);
         $options['timeout'] = $this->requestTimeout;
         $options['connect_timeout'] = $this->connectTimeout;
-        $request = new Request('POST', $this->requestPath);
+        $request = new Request($this->requestMethod, $this->requestPath);
         try {
             if ($callback != null) {
                 return $this->client->sendAsync($request, $options)->then(
                     function (ResponseInterface $res) use (&$response, $callback) {
                         try {
+                            print_r($res->getBody()->getContents());
+                            exit;
                             $response->unwrapResponse($res);
                             $callback->onSucceed($response);
                         } catch (Exception $e) {

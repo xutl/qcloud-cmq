@@ -100,10 +100,7 @@ abstract class BaseResponse
         $this->httpClient = $httpClient;
     }
 
-    /**
-     * @param array $content
-     */
-    abstract public function parseResponse(array $content);
+
 
     /**
      * @return boolean

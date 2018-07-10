@@ -63,6 +63,8 @@ class Promise
         try {
             $res = $this->promise->wait();
             if ($res instanceof ResponseInterface) {
+                print_r($res->getBody()->getContents());
+                exit;
                 $this->response->unwrapResponse($res);
             }
         } catch (TransferException $e) {

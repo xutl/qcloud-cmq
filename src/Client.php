@@ -8,6 +8,8 @@
 namespace XuTL\QCloud\Cmq;
 
 use XuTL\QCloud\Cmq\Http\HttpClient;
+use XuTL\QCloud\Cmq\Requests\CreateQueueRequest;
+use XuTL\QCloud\Cmq\Responses\CreateQueueResponse;
 
 /**
  * Class Client
@@ -52,6 +54,16 @@ class Client
         return new Queue($this->client, $queueName);
     }
 
+    /**
+     * Create Queue and Returns the Queue reference
+     * @param CreateQueueRequest $request :  the QueueName and QueueAttributes
+     * @return CreateQueueResponse $response: the CreateQueueResponse
+     */
+    public function createQueue(CreateQueueRequest $request)
+    {
+        $response = new CreateQueueResponse($request->getQueueName());
+        return $this->client->sendRequest($request, $response);
+    }
 
     /**
      * Returns a topic reference for operating on the topic

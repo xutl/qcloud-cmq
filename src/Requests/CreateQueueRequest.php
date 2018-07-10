@@ -15,13 +15,16 @@ use XuTL\QCloud\Cmq\Http\BaseRequest;
  */
 class CreateQueueRequest extends BaseRequest
 {
+    private $queueName;
 
     /**
      * CreateQueueRequest constructor.
+     * @param string $queueName
      */
-    public function __construct()
+    public function __construct($queueName)
     {
         parent::__construct('CreateQueue');
+        $this->queueName = $queueName;
     }
 
     /**
@@ -33,6 +36,11 @@ class CreateQueueRequest extends BaseRequest
     {
         $this->setBizContent('queueName', $queueName);
         return $this;
+    }
+
+    public function getQueueName()
+    {
+        return $this->queueName;
     }
 
     /**
