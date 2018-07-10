@@ -30,12 +30,24 @@ class CreateQueueResponse extends BaseResponse
         $content = \GuzzleHttp\json_decode($response->getBody()->getContents(), true);
         if ($this->statusCode != 200) {
             $this->succeed = false;
+            $this->parseErrorResponse($this->statusCode, $content);
             return;
         } else {
             $this->succeed = true;
 
-
         }
+    }
 
+    public function parseErrorResponse($statusCode, $content, Exception $exception = null)
+    {
+        if ($content['code'] == Constants::INVALID_ARGUMENT)
+        {
+            throw new InvalidArgumentException($statusCode, $result['Message'], $exception, $result['Code'], $result['RequestId'], $result['HostId']);
+        }
+        if ($content['Code'] == Constants::QUEUE_ALREADY_EXIST)
+        {
+            throw new QueueAlreadyExistException($statusCode, $result['Message'], $exception, $result['Code'], $result['RequestId'], $result['HostId']);
+        }
+        throw new MnsException($statusCode, $result['Message'], $exception, $result['Code'], $result['RequestId'], $result['HostId']);
     }
 }
