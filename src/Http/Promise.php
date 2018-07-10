@@ -27,8 +27,6 @@ class Promise
      */
     private $promise;
 
-    private $httpClient;
-
     /**
      * Promise constructor.
      * @param PromiseInterface $promise
@@ -56,13 +54,12 @@ class Promise
         return $this->response;
     }
 
-
     public function wait()
     {
         try {
             $res = $this->promise->wait();
             if ($res instanceof ResponseInterface) {
-                $this->response->parseResponse($res->getStatusCode(), $res->getBody());
+                $this->response->unwrapResponse($res);
             }
         } catch (TransferException $e) {
             $message = $e->getMessage();

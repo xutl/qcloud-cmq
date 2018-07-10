@@ -7,7 +7,8 @@
 
 namespace XuTL\QCloud\Cmq\Http;
 
-use Psr\Http\Message\StreamInterface;
+use Psr\Http\Message\ResponseInterface;
+use XuTL\QCloud\Cmq\Exception\Exception;
 
 /**
  * Class BaseResponse
@@ -27,11 +28,11 @@ abstract class BaseResponse
     protected $succeed;
 
     /**
-     * @param string $statusCode
-     * @param StreamInterface $content
+     * 解析响应
+     * @param \Psr\Http\Message\ResponseInterface $response
      * @return mixed
      */
-    abstract public function parseResponse($statusCode, StreamInterface $content);
+    abstract public function unwrapResponse(ResponseInterface $response);
 
     /**
      * @return boolean

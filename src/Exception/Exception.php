@@ -16,51 +16,50 @@ use RuntimeException;
  */
 class Exception extends RuntimeException
 {
-    /**
-     * @var int
-     */
-    public $code;
+    private $errorCode;
+    private $requestId;
 
-    /**
-     * @var string
-     */
-    public $message;
-    /**
-     * @var array
-     */
-    public $data;
-
-    /**
-     * Exception constructor.
-     * @param string $message 错误描述
-     * @param int $code 错误类型
-     * @param array $data 错误数据
-     */
-    public function __construct($message, $code = -1, $data = [])
+    public function __construct($code, $message, $previousException = null, $errorCode = null, $requestId = null)
     {
-        $this->code = $code;
-        $this->message = $message;
-        $this->data = $data;
+        parent::__construct($message, $code, $previousException);
+
+        if ($errorCode == null)
+        {
+            if ($code >= 500)
+            {
+                $errorCode = "ServerError";
+            }
+            else
+            {
+                $errorCode = "ClientError";
+            }
+        }
+        $this->errorCode = $errorCode;
+
+        $this->requestId = $requestId;
     }
 
-    /**
-     * @return string
-     */
     public function __toString()
     {
-        return "Exception  " . $this->getInfo();
+        $str = "Code: " . $this->getCode() . " Message: " . $this->getMessage();
+        if ($this->errorCode != NULL)
+        {
+            $str .= " ErrorCode: " . $this->errorCode;
+        }
+        if ($this->requestId != NULL)
+        {
+            $str .= " RequestId: " . $this->requestId;
+        }
+        return $str;
     }
 
-    /**
-     * @return string
-     */
-    public function getInfo()
+    public function getMnsErrorCode()
     {
-        $info = [
-            'code' => $this->code,
-            'data' => json_encode($this->data),
-            'message' => $this->message
-        ];
-        return json_encode($info);
+        return $this->errorCode;
+    }
+
+    public function getRequestId()
+    {
+        return $this->requestId;
     }
 }

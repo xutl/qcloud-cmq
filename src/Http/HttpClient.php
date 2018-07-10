@@ -14,6 +14,7 @@ use Psr\Http\Message\ResponseInterface;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Exception\TransferException;
 use XuTL\QCloud\Cmq\Exception\ClientParameterException;
+use XuTL\QCloud\Cmq\Exception\Exception;
 
 /**
  * Class HttpClient
@@ -224,7 +225,7 @@ class HttpClient
                 return $this->client->sendAsync($request, $options)->then(
                     function (ResponseInterface $res) use (&$response, $callback) {
                         try {
-                            $response->parseResponse($res->getStatusCode(), $res->getBody());
+                            $response->unwrapResponse($res);
                             $callback->onSucceed($response);
                         } catch (Exception $e) {
                             $callback->onFailed($e);
@@ -239,7 +240,7 @@ class HttpClient
             if ($e->hasResponse()) {
                 $message = $e->getResponse()->getBody();
             }
-            throw new RuntimeException($message, $e->getCode(), $e);
+            throw new Exception($message, $e->getCode(), $e);
         }
     }
 }
