@@ -8,6 +8,8 @@
 namespace XuTL\QCloud\Cmq;
 
 use XuTL\QCloud\Cmq\Http\HttpClient;
+use XuTL\QCloud\Cmq\Requests\PublishMessageRequest;
+use XuTL\QCloud\Cmq\Responses\PublishMessageResponse;
 
 /**
  * Class Topic
@@ -44,6 +46,10 @@ class Topic
         return $this->topicName;
     }
 
+    /**
+     * @param PublishMessageRequest $request
+     * @return Http\BaseResponse|PublishMessageResponse
+     */
     public function publishMessage(PublishMessageRequest $request)
     {
         $request->setTopicName($this->topicName);
