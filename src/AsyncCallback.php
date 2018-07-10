@@ -7,7 +7,7 @@
 
 namespace XuTL\QCloud\Cmq;
 
-use XuTL\QCloud\Cmq\Exception\Exception;
+use XuTL\QCloud\Cmq\Exception\CmqException;
 use XuTL\QCloud\Cmq\Http\BaseResponse;
 
 /**
@@ -43,7 +43,7 @@ class AsyncCallback
         return call_user_func($this->succeedCallback, $result);
     }
 
-    public function onFailed(Exception $e)
+    public function onFailed(CmqException $e)
     {
         return call_user_func($this->failedCallback, $e);
     }

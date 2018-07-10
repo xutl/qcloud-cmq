@@ -10,7 +10,7 @@ namespace XuTL\QCloud\Cmq\Http;
 use GuzzleHttp\Promise\PromiseInterface;
 use GuzzleHttp\Exception\TransferException;
 use Psr\Http\Message\ResponseInterface;
-use XuTL\QCloud\Cmq\Exception\Exception;
+use XuTL\QCloud\Cmq\Exception\CmqException;
 
 /**
  * Class Promise
@@ -67,7 +67,7 @@ class Promise
             if ($e->hasResponse()) {
                 $message = $e->getResponse()->getBody();
             }
-            throw new Exception($message, $e->getCode(), $e);
+            throw new CMQException($message, $e->getCode());
         }
         return $this->response;
     }

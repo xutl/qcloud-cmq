@@ -7,14 +7,12 @@
 
 namespace XuTL\QCloud\Cmq\Http;
 
-use RuntimeException;
 use XuTL\QCloud\Cmq\AsyncCallback;
 use XuTL\QCloud\Cmq\Config;
 use Psr\Http\Message\ResponseInterface;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Exception\TransferException;
-use XuTL\QCloud\Cmq\Exception\ClientParameterException;
-use XuTL\QCloud\Cmq\Exception\Exception;
+use XuTL\QCloud\Cmq\Exception\CmqException;
 
 /**
  * Class HttpClient
@@ -227,7 +225,7 @@ class HttpClient
                         try {
                             $response->unwrapResponse($res);
                             $callback->onSucceed($response);
-                        } catch (Exception $e) {
+                        } catch (CMQException $e) {
                             $callback->onFailed($e);
                         }
                     }
@@ -240,7 +238,7 @@ class HttpClient
             if ($e->hasResponse()) {
                 $message = $e->getResponse()->getBody();
             }
-            throw new Exception($message, $e->getCode(), $e);
+            throw new CMQException($message, $e->getCode());
         }
     }
 }
