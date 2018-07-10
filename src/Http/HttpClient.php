@@ -224,9 +224,7 @@ class HttpClient
                 return $this->client->sendAsync($request, $options)->then(
                     function (ResponseInterface $res) use (&$response, $callback) {
                         try {
-                            print_r($res->getBody()->getContents());
-                            exit;
-                            $response->unwrapResponse($res);
+                            $response->parseResponse($res->getStatusCode(), $res->getBody());
                             $callback->onSucceed($response);
                         } catch (Exception $e) {
                             $callback->onFailed($e);

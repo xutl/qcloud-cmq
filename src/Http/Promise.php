@@ -57,15 +57,12 @@ class Promise
     }
 
 
-
     public function wait()
     {
         try {
             $res = $this->promise->wait();
             if ($res instanceof ResponseInterface) {
-                print_r($res->getBody()->getContents());
-                exit;
-                $this->response->unwrapResponse($res);
+                $this->response->parseResponse($res->getStatusCode(), $res->getBody());
             }
         } catch (TransferException $e) {
             $message = $e->getMessage();

@@ -16,49 +16,20 @@ use Psr\Http\Message\ResponseInterface;
 abstract class BaseResponse
 {
     /**
-     * @var string
-     */
-    protected $responseNode;
-
-    /**
-     * @var HttpClient
-     */
-    private $httpClient;
-
-    /**
      * @var int
      */
     protected $code;
-
-    protected $subCode;
-
     /**
      * @var string
      */
     protected $msg;
-
-    protected $subMsg;
 
     /**
      * @var boolean
      */
     protected $succeed;
 
-    /**
-     * @param string $responseNode
-     */
-    public function setResponseNode($responseNode)
-    {
-        $this->responseNode = $responseNode;
-    }
-
-    /**
-     * @return string
-     */
-    public function getResponseNode()
-    {
-        return $this->responseNode;
-    }
+    abstract public function parseResponse($statusCode, $content);
 
     /**
      * Convert response contents to json.
@@ -68,38 +39,13 @@ abstract class BaseResponse
     public function unwrapResponse(ResponseInterface $response)
     {
         $contents = \GuzzleHttp\json_decode($response->getBody()->getContents(), true);
-        $content = $contents[$this->getResponseNode()];
-        $this->code = $content['code'];
-        $this->msg = $content['msg'];
-        if ($this->code == 10000) {
-            if ($this->httpClient->verify($content, $contents['sign'], true) == true) {
-                $this->succeed = true;
-                $this->parseResponse($content);
-            } else {
-                throw new AlipayException(422, 'Signature verification error.');
-            }
-        } else {
-            $this->parseErrorResponse($content);
+        if ($contents['code'] == 0) {
+
         }
-    }
 
-    /**
-     * @param array $content
-     */
-    public function parseErrorResponse(array $content)
-    {
-        $this->subCode = $content['sub_code'];
-        $this->subMsg = $content['sub_msg'];
+        print_r($contents);
+        exit;
     }
-
-    /**
-     * @param $httpClient
-     */
-    public function setHttpClient(HttpClient &$httpClient)
-    {
-        $this->httpClient = $httpClient;
-    }
-
 
 
     /**
@@ -124,21 +70,5 @@ abstract class BaseResponse
     public function getMsg()
     {
         return $this->msg;
-    }
-
-    /**
-     * @return int
-     */
-    public function getSubCode()
-    {
-        return $this->subCode;
-    }
-
-    /**
-     * @return string
-     */
-    public function getSubMsg()
-    {
-        return $this->subMsg;
     }
 }
