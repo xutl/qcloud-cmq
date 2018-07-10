@@ -9,7 +9,11 @@ namespace XuTL\QCloud\Cmq;
 
 use XuTL\QCloud\Cmq\Http\HttpClient;
 use XuTL\QCloud\Cmq\Requests\CreateQueueRequest;
+use XuTL\QCloud\Cmq\Requests\DeleteQueueRequest;
+use XuTL\QCloud\Cmq\Requests\ListQueueRequest;
 use XuTL\QCloud\Cmq\Responses\CreateQueueResponse;
+use XuTL\QCloud\Cmq\Responses\DeleteQueueResponse;
+use XuTL\QCloud\Cmq\Responses\ListQueueResponse;
 
 /**
  * Class Client
@@ -57,12 +61,65 @@ class Client
     /**
      * Create Queue and Returns the Queue reference
      * @param CreateQueueRequest $request :  the QueueName and QueueAttributes
-     * @return CreateQueueResponse $response: the CreateQueueResponse
+     * @return Http\BaseResponse|CreateQueueResponse
      */
     public function createQueue(CreateQueueRequest $request)
     {
         $response = new CreateQueueResponse($request->getQueueName());
         return $this->client->sendRequest($request, $response);
+    }
+
+    /**
+     * Create Queue and Returns the Queue reference
+     * The request will not be sent until calling MnsPromise->wait();
+     *
+     * @param CreateQueueRequest $request :  the QueueName and QueueAttributes
+     * @param AsyncCallback $callback :  the Callback when the request finishes
+     * @return Http\Promise
+     */
+    public function createQueueAsync(CreateQueueRequest $request, AsyncCallback $callback = null)
+    {
+        $response = new CreateQueueResponse($request->getQueueName());
+        return $this->client->sendRequestAsync($request, $response, $callback);
+    }
+
+    /**
+     * Query the queues created by current account
+     *
+     * @param ListQueueRequest $request : define filters for quering queues
+     * @return Http\BaseResponse|ListQueueResponse
+     */
+    public function listQueue(ListQueueRequest $request)
+    {
+        $response = new ListQueueResponse();
+        return $this->client->sendRequest($request, $response);
+    }
+
+    public function listQueueAsync(ListQueueRequest $request, AsyncCallback $callback = null)
+    {
+        $response = new ListQueueResponse();
+        return $this->client->sendRequestAsync($request, $response, $callback);
+    }
+
+    /**
+     * Delete the specified queue
+     * the request will succeed even when the queue does not exist
+     *
+     * @param $queueName : the queueName
+     * @return Http\BaseResponse|DeleteQueueResponse
+     */
+    public function deleteQueue($queueName)
+    {
+        $request = new DeleteQueueRequest($queueName);
+        $response = new DeleteQueueResponse();
+        return $this->client->sendRequest($request, $response);
+    }
+
+    public function deleteQueueAsync($queueName, AsyncCallback $callback = NULL)
+    {
+        $request = new DeleteQueueRequest($queueName);
+        $response = new DeleteQueueResponse();
+        return $this->client->sendRequestAsync($request, $response, $callback);
     }
 
     /**

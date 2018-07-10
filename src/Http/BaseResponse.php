@@ -8,7 +8,6 @@
 namespace XuTL\QCloud\Cmq\Http;
 
 use Psr\Http\Message\ResponseInterface;
-use XuTL\QCloud\Cmq\Exception\CmqException;
 use XuTL\QCloud\Cmq\Exception\CMQServerException;
 use XuTL\QCloud\Cmq\Exception\CMQServerNetworkException;
 
@@ -16,7 +15,7 @@ use XuTL\QCloud\Cmq\Exception\CMQServerNetworkException;
  * Class BaseResponse
  * @package XuTL\QCloud\Cmq\Http
  */
-class BaseResponse
+abstract class BaseResponse
 {
     /**
      * @var boolean
@@ -26,6 +25,10 @@ class BaseResponse
     protected $code;
 
     protected $message;
+
+    protected $requestId;
+
+    protected $codeDesc;
 
     protected $_content = [];
 

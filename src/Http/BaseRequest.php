@@ -11,7 +11,7 @@ namespace XuTL\QCloud\Cmq\Http;
  * Class BaseRequest
  * @package Xutl\QCloud\Cmq\Http
  */
-class BaseRequest
+abstract class BaseRequest
 {
     private $parameter = [];
 
