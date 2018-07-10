@@ -26,4 +26,12 @@ abstract class BaseRequest
     {
         $this->action = $action;
     }
+
+    /**
+     * @return string
+     */
+    public function getAction()
+    {
+        return $this->action;
+    }
 }
