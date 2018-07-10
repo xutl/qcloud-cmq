@@ -216,7 +216,7 @@ class HttpClient
         $options['form_params'] = $this->buildRequestBody($request);
         $options['timeout'] = $this->requestTimeout;
         $options['connect_timeout'] = $this->connectTimeout;
-        $request = new Request('POST', '/v2/index.php');
+        $request = new Request('POST', $this->requestPath);
         try {
             if ($callback != null) {
                 return $this->client->sendAsync($request, $options)->then(
