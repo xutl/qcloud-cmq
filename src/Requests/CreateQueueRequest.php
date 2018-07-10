@@ -24,6 +24,7 @@ class CreateQueueRequest extends BaseRequest
     public function __construct($queueName)
     {
         parent::__construct('CreateQueue');
+        $this->setQueueName($queueName);
         $this->queueName = $queueName;
     }
 
@@ -34,10 +35,13 @@ class CreateQueueRequest extends BaseRequest
      */
     public function setQueueName($queueName)
     {
-        $this->setBizContent('queueName', $queueName);
+        $this->setParameter('queueName', $queueName);
         return $this;
     }
 
+    /**
+     * @return string
+     */
     public function getQueueName()
     {
         return $this->queueName;
@@ -50,7 +54,7 @@ class CreateQueueRequest extends BaseRequest
      */
     public function setMaxMsgHeapNum($maxMsgHeapNum)
     {
-        $this->setBizContent('maxMsgHeapNum', $maxMsgHeapNum);
+        $this->setParameter('maxMsgHeapNum', $maxMsgHeapNum);
         return $this;
     }
 
@@ -61,7 +65,7 @@ class CreateQueueRequest extends BaseRequest
      */
     public function setPollingWaitSeconds($pollingWaitSeconds)
     {
-        $this->setBizContent('pollingWaitSeconds', $pollingWaitSeconds);
+        $this->setParameter('pollingWaitSeconds', $pollingWaitSeconds);
         return $this;
     }
 
@@ -72,7 +76,7 @@ class CreateQueueRequest extends BaseRequest
      */
     public function setVisibilityTimeout($visibilityTimeout)
     {
-        $this->setBizContent('visibilityTimeout', $visibilityTimeout);
+        $this->setParameter('visibilityTimeout', $visibilityTimeout);
         return $this;
     }
 
@@ -83,7 +87,7 @@ class CreateQueueRequest extends BaseRequest
      */
     public function setMaxMsgSize($maxMsgSize)
     {
-        $this->setBizContent('maxMsgSize', $maxMsgSize);
+        $this->setParameter('maxMsgSize', $maxMsgSize);
         return $this;
     }
 
@@ -94,7 +98,7 @@ class CreateQueueRequest extends BaseRequest
      */
     public function setMsgRetentionSeconds($msgRetentionSeconds)
     {
-        $this->setBizContent('msgRetentionSeconds', $msgRetentionSeconds);
+        $this->setParameter('msgRetentionSeconds', $msgRetentionSeconds);
         return $this;
     }
 
@@ -105,7 +109,7 @@ class CreateQueueRequest extends BaseRequest
      */
     public function setRewindSeconds($rewindSeconds)
     {
-        $this->setBizContent('rewindSeconds', $rewindSeconds);
+        $this->setParameter('rewindSeconds', $rewindSeconds);
         return $this;
     }
 

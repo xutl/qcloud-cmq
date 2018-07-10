@@ -163,8 +163,7 @@ class HttpClient
      */
     public function buildRequestBody(BaseRequest &$request)
     {
-        $params = [];
-        $params['Action'] = $request->getAction();
+        $params = $request->getParameters();
         $params['SecretId'] = $this->secretId;
         $params['Nonce'] = uniqid();
         $params['Timestamp'] = time();
@@ -177,6 +176,7 @@ class HttpClient
         } elseif ($this->signatureMethod == self::SIGNATURE_METHOD_HMAC_SHA1) {
             $params['Signature'] = base64_encode(hash_hmac('sha1', $plainText, $this->secretKey, true));
         }
+
         return $params;
     }
 

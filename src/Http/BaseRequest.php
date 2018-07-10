@@ -13,10 +13,7 @@ namespace XuTL\QCloud\Cmq\Http;
  */
 abstract class BaseRequest
 {
-    /**
-     * @var string
-     */
-    private $action;
+    private $parameter = [];
 
     /**
      * BaseRequest constructor.
@@ -24,7 +21,7 @@ abstract class BaseRequest
      */
     public function __construct($action)
     {
-        $this->action = $action;
+        $this->parameter['Action'] = ucfirst($action);
     }
 
     /**
@@ -32,6 +29,23 @@ abstract class BaseRequest
      */
     public function getAction()
     {
-        return $this->action;
+        return $this->parameter['Action'];
+    }
+
+    /**
+     * @param string $key
+     * @param string|array $value
+     */
+    public function setParameter($key, $value)
+    {
+        $this->parameter[$key] = $value;
+    }
+
+    /**
+     * @return array
+     */
+    public function getParameters()
+    {
+        return $this->parameter;
     }
 }
