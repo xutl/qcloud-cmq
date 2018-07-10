@@ -43,4 +43,48 @@ class Topic
     {
         return $this->topicName;
     }
+
+    public function publishMessage(PublishMessageRequest $request)
+    {
+        $request->setTopicName($this->topicName);
+        $response = new PublishMessageResponse();
+        return $this->client->sendRequest($request, $response);
+    }
+
+    public function subscribe(SubscriptionAttributes $attributes)
+    {
+        $attributes->setTopicName($this->topicName);
+        $request = new SubscribeRequest($attributes);
+        $response = new SubscribeResponse();
+        return $this->client->sendRequest($request, $response);
+    }
+
+    public function unsubscribe($subscriptionName)
+    {
+        $request = new UnsubscribeRequest($this->topicName, $subscriptionName);
+        $response = new UnsubscribeResponse();
+        return $this->client->sendRequest($request, $response);
+    }
+
+    public function getSubscriptionAttribute($subscriptionName)
+    {
+        $request = new GetSubscriptionAttributeRequest($this->topicName, $subscriptionName);
+        $response = new GetSubscriptionAttributeResponse();
+        return $this->client->sendRequest($request, $response);
+    }
+
+    public function setSubscriptionAttribute(UpdateSubscriptionAttributes $attributes)
+    {
+        $attributes->setTopicName($this->topicName);
+        $request = new SetSubscriptionAttributeRequest($attributes);
+        $response = new SetSubscriptionAttributeResponse();
+        return $this->client->sendRequest($request, $response);
+    }
+
+    public function listSubscription($retNum = NULL, $prefix = NULL, $marker = NULL)
+    {
+        $request = new ListSubscriptionRequest($this->topicName, $retNum, $prefix, $marker);
+        $response = new ListSubscriptionResponse();
+        return $this->client->sendRequest($request, $response);
+    }
 }

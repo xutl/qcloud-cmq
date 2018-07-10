@@ -9,12 +9,18 @@ namespace XuTL\QCloud\Cmq;
 
 use XuTL\QCloud\Cmq\Http\HttpClient;
 use XuTL\QCloud\Cmq\Requests\CreateQueueRequest;
+use XuTL\QCloud\Cmq\Requests\CreateTopicRequest;
 use XuTL\QCloud\Cmq\Requests\DeleteQueueRequest;
+use XuTL\QCloud\Cmq\Requests\DeleteTopicRequest;
 use XuTL\QCloud\Cmq\Requests\ListQueueRequest;
+use XuTL\QCloud\Cmq\Requests\ListTopicRequest;
 use XuTL\QCloud\Cmq\Requests\RewindQueueRequest;
 use XuTL\QCloud\Cmq\Responses\CreateQueueResponse;
+use XuTL\QCloud\Cmq\Responses\CreateTopicResponse;
 use XuTL\QCloud\Cmq\Responses\DeleteQueueResponse;
+use XuTL\QCloud\Cmq\Responses\DeleteTopicResponse;
 use XuTL\QCloud\Cmq\Responses\ListQueueResponse;
+use XuTL\QCloud\Cmq\Responses\ListTopicResponse;
 use XuTL\QCloud\Cmq\Responses\RewindQueueResponse;
 
 /**
@@ -142,5 +148,36 @@ class Client
     public function getTopicRef($topicName)
     {
         return new Topic($this->client, $topicName);
+    }
+
+    /**
+     * @param CreateTopicRequest $request
+     * @return Http\BaseResponse|CreateTopicResponse
+     */
+    public function createTopic(CreateTopicRequest $request)
+    {
+        $response = new CreateTopicResponse($request->getTopicName());
+        return $this->client->sendRequest($request, $response);
+    }
+
+    /**
+     * @param $topicName
+     * @return Http\BaseResponse|DeleteTopicResponse
+     */
+    public function deleteTopic($topicName)
+    {
+        $request = new DeleteTopicRequest($topicName);
+        $response = new DeleteTopicResponse();
+        return $this->client->sendRequest($request, $response);
+    }
+
+    /**
+     * @param ListTopicRequest $request
+     * @return Http\BaseResponse|ListTopicResponse
+     */
+    public function listTopic(ListTopicRequest $request)
+    {
+        $response = new ListTopicResponse();
+        return $this->client->sendRequest($request, $response);
     }
 }
