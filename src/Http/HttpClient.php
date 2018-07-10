@@ -239,7 +239,7 @@ class HttpClient
             if ($e->hasResponse()) {
                 $message = $e->getResponse()->getBody();
             }
-            throw new RuntimeException($e->getCode(), $message, $e);
+            throw new RuntimeException($message, $e->getCode(), $e);
         }
     }
 }

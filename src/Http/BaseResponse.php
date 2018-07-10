@@ -7,7 +7,7 @@
 
 namespace XuTL\QCloud\Cmq\Http;
 
-use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\StreamInterface;
 
 /**
  * Class BaseResponse
@@ -16,37 +16,22 @@ use Psr\Http\Message\ResponseInterface;
 abstract class BaseResponse
 {
     /**
+     * Http状态码
      * @var int
      */
-    protected $code;
-    /**
-     * @var string
-     */
-    protected $msg;
+    protected $statusCode;
 
     /**
      * @var boolean
      */
     protected $succeed;
 
-    abstract public function parseResponse($statusCode, $content);
-
     /**
-     * Convert response contents to json.
-     *
-     * @param \Psr\Http\Message\ResponseInterface $response
+     * @param string $statusCode
+     * @param StreamInterface $content
+     * @return mixed
      */
-    public function unwrapResponse(ResponseInterface $response)
-    {
-        $contents = \GuzzleHttp\json_decode($response->getBody()->getContents(), true);
-        if ($contents['code'] == 0) {
-
-        }
-
-        print_r($contents);
-        exit;
-    }
-
+    abstract public function parseResponse($statusCode, StreamInterface $content);
 
     /**
      * @return boolean
@@ -59,16 +44,8 @@ abstract class BaseResponse
     /**
      * @return int
      */
-    public function getCode()
+    public function getStatusCode()
     {
-        return $this->code;
-    }
-
-    /**
-     * @return string
-     */
-    public function getMsg()
-    {
-        return $this->msg;
+        return $this->statusCode;
     }
 }
