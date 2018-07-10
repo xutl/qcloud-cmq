@@ -164,7 +164,7 @@ class HttpClient
     {
         $params = $request->getParameters();
         $params['SecretId'] = $this->secretId;
-        $params['Nonce'] = uniqid();
+        $params['Nonce'] = rand(1, 65535);
         $params['Timestamp'] = time();
         $params['SignatureMethod'] = $this->signatureMethod;
         $host = str_replace(['http://', 'https://'], '', $this->endPoint);
@@ -175,7 +175,7 @@ class HttpClient
         } elseif ($this->signatureMethod == self::SIGNATURE_METHOD_HMAC_SHA1) {
             $params['Signature'] = base64_encode(hash_hmac('sha1', $plainText, $this->secretKey, true));
         }
-
+        //var_dump($params);exit;
         return $params;
     }
 

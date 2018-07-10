@@ -12,5 +12,6 @@ use XuTL\QCloud\Cmq\Http\BaseResponse;
 
 class SendMessageResponse extends BaseResponse
 {
-
+    public $msgId;
+    public $clientRequestId;
 }
