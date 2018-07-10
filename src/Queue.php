@@ -8,11 +8,17 @@
 namespace XuTL\QCloud\Cmq;
 
 use XuTL\QCloud\Cmq\Http\HttpClient;
+use XuTL\QCloud\Cmq\Requests\BatchDeleteMessageRequest;
+use XuTL\QCloud\Cmq\Requests\BatchReceiveMessageRequest;
+use XuTL\QCloud\Cmq\Requests\BatchSendMessageRequest;
 use XuTL\QCloud\Cmq\Requests\DeleteMessageRequest;
 use XuTL\QCloud\Cmq\Requests\GetQueueAttributeRequest;
 use XuTL\QCloud\Cmq\Requests\ReceiveMessageRequest;
 use XuTL\QCloud\Cmq\Requests\SendMessageRequest;
 use XuTL\QCloud\Cmq\Requests\SetQueueAttributeRequest;
+use XuTL\QCloud\Cmq\Responses\BatchDeleteMessageResponse;
+use XuTL\QCloud\Cmq\Responses\BatchReceiveMessageResponse;
+use XuTL\QCloud\Cmq\Responses\BatchSendMessageResponse;
 use XuTL\QCloud\Cmq\Responses\DeleteMessageResponse;
 use XuTL\QCloud\Cmq\Responses\GetQueueAttributeResponse;
 use XuTL\QCloud\Cmq\Responses\ReceiveMessageResponse;
@@ -123,6 +129,20 @@ class Queue
         return $this->client->sendRequestAsync($request, $response, $callback);
     }
 
+    public function batchSendMessage(BatchSendMessageRequest $request)
+    {
+        $request->setQueueName($this->queueName);
+        $response = new BatchSendMessageResponse();
+        return $this->client->sendRequest($request, $response);
+    }
+
+    public function batchSendMessageAsync(BatchSendMessageRequest $request, AsyncCallback $callback = null)
+    {
+        $request->setQueueName($this->queueName);
+        $response = new BatchSendMessageResponse();
+        return $this->client->sendRequestAsync($request, $response, $callback);
+    }
+
     /**
      * @param null $waitSeconds
      * @return Http\BaseResponse|ReceiveMessageResponse
@@ -146,6 +166,19 @@ class Queue
         return $this->client->sendRequestAsync($request, $response, $callback);
     }
 
+    public function batchReceiveMessage(BatchReceiveMessageRequest $request)
+    {
+        $request->setQueueName($this->queueName);
+        $response = new BatchReceiveMessageResponse();
+        return $this->client->sendRequest($request, $response);
+    }
+
+    public function batchReceiveMessageAsync(BatchReceiveMessageRequest $request, AsyncCallback $callback = NULL)
+    {
+        $request->setQueueName($this->queueName);
+        return $this->client->sendRequestAsync($request, $response, $callback);
+    }
+
     /**
      * @param $receiptHandle
      * @return Http\BaseResponse|DeleteMessageResponse
@@ -166,6 +199,20 @@ class Queue
     {
         $request = new DeleteMessageRequest($this->queueName, $receiptHandle);
         $response = new DeleteMessageResponse();
+        return $this->client->sendRequestAsync($request, $response, $callback);
+    }
+
+    public function batchDeleteMessage($receiptHandles)
+    {
+        $request = new BatchDeleteMessageRequest($this->queueName, $receiptHandles);
+        $response = new BatchDeleteMessageResponse();
+        return $this->client->sendRequest($request, $response);
+    }
+
+    public function batchDeleteMessageAsync($receiptHandles, AsyncCallback $callback = NULL)
+    {
+        $request = new BatchDeleteMessageRequest($this->queueName, $receiptHandles);
+        $response = new BatchDeleteMessageResponse();
         return $this->client->sendRequestAsync($request, $response, $callback);
     }
 }
