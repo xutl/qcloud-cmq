@@ -23,31 +23,24 @@ class Exception extends RuntimeException
     {
         parent::__construct($message, $code, $previousException);
 
-        if ($errorCode == null)
-        {
-            if ($code >= 500)
-            {
+        if ($errorCode == null) {
+            if ($code >= 500) {
                 $errorCode = "ServerError";
-            }
-            else
-            {
+            } else {
                 $errorCode = "ClientError";
             }
         }
         $this->errorCode = $errorCode;
-
         $this->requestId = $requestId;
     }
 
     public function __toString()
     {
         $str = "Code: " . $this->getCode() . " Message: " . $this->getMessage();
-        if ($this->errorCode != NULL)
-        {
+        if ($this->errorCode != NULL) {
             $str .= " ErrorCode: " . $this->errorCode;
         }
-        if ($this->requestId != NULL)
-        {
+        if ($this->requestId != NULL) {
             $str .= " RequestId: " . $this->requestId;
         }
         return $str;

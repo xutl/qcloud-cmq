@@ -7,6 +7,7 @@
 
 namespace XuTL\QCloud\Cmq;
 
+use XuTL\QCloud\Cmq\Exception\Exception;
 use XuTL\QCloud\Cmq\Http\BaseResponse;
 
 /**

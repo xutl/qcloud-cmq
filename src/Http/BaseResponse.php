@@ -17,12 +17,6 @@ use XuTL\QCloud\Cmq\Exception\Exception;
 abstract class BaseResponse
 {
     /**
-     * Http状态码
-     * @var int
-     */
-    protected $statusCode;
-
-    /**
      * @var boolean
      */
     protected $succeed;
@@ -30,9 +24,25 @@ abstract class BaseResponse
     /**
      * 解析响应
      * @param \Psr\Http\Message\ResponseInterface $response
+     */
+    public function unwrapResponse(ResponseInterface $response)
+    {
+        $content = \GuzzleHttp\json_decode($response->getBody()->getContents(), true);
+        if ($content['code'] == 0) {
+            $this->succeed = true;
+            $this->parseResponse($content);
+        } else {
+            $this->succeed = false;
+            throw new Exception($content['message'], $content['code']);
+        }
+    }
+
+    /**
+     * 解析响应
+     * @param \Psr\Http\Message\ResponseInterface $response
      * @return mixed
      */
-    abstract public function unwrapResponse(ResponseInterface $response);
+    abstract public function unwrapResponse1(ResponseInterface $response);
 
     /**
      * @return boolean
@@ -40,13 +50,5 @@ abstract class BaseResponse
     public function isSucceed()
     {
         return $this->succeed;
-    }
-
-    /**
-     * @return int
-     */
-    public function getStatusCode()
-    {
-        return $this->statusCode;
     }
 }
