@@ -8,8 +8,24 @@
 namespace XuTL\QCloud\Cmq;
 
 use XuTL\QCloud\Cmq\Http\HttpClient;
+use XuTL\QCloud\Cmq\Requests\ClearSubscriptionFilterTagsRequest;
+use XuTL\QCloud\Cmq\Requests\GetSubscriptionAttributeRequest;
+use XuTL\QCloud\Cmq\Requests\GetTopicAttributeRequest;
+use XuTL\QCloud\Cmq\Requests\ListSubscriptionRequest;
 use XuTL\QCloud\Cmq\Requests\PublishMessageRequest;
+use XuTL\QCloud\Cmq\Requests\SetSubscriptionAttributeRequest;
+use XuTL\QCloud\Cmq\Requests\SetTopicAttributeRequest;
+use XuTL\QCloud\Cmq\Requests\SubscribeRequest;
+use XuTL\QCloud\Cmq\Requests\UnsubscribeRequest;
+use XuTL\QCloud\Cmq\Responses\ClearSubscriptionFilterTagsResponse;
+use XuTL\QCloud\Cmq\Responses\GetSubscriptionAttributeResponse;
+use XuTL\QCloud\Cmq\Responses\GetTopicAttributeResponse;
+use XuTL\QCloud\Cmq\Responses\ListSubscriptionResponse;
 use XuTL\QCloud\Cmq\Responses\PublishMessageResponse;
+use XuTL\QCloud\Cmq\Responses\SetSubscriptionAttributeResponse;
+use XuTL\QCloud\Cmq\Responses\SetTopicAttributeResponse;
+use XuTL\QCloud\Cmq\Responses\SubscribeResponse;
+use XuTL\QCloud\Cmq\Responses\UnsubscribeResponse;
 
 /**
  * Class Topic
@@ -46,6 +62,20 @@ class Topic
         return $this->topicName;
     }
 
+    public function setAttribute(SetTopicAttributeRequest $request)
+    {
+        $request->setTopicName($this->topicName);
+        $response = new SetTopicAttributeResponse();
+        return $this->client->sendRequest($request, $response);
+    }
+
+    public function getAttribute()
+    {
+        $request = new GetTopicAttributeRequest($this->topicName);
+        $response = new GetTopicAttributeResponse();
+        return $this->client->sendRequest($request, $response);
+    }
+
     /**
      * @param PublishMessageRequest $request
      * @return Http\BaseResponse|PublishMessageResponse
@@ -57,10 +87,13 @@ class Topic
         return $this->client->sendRequest($request, $response);
     }
 
-    public function subscribe(SubscriptionAttributes $attributes)
+    /**
+     * @param SubscribeRequest $request
+     * @return Http\BaseResponse
+     */
+    public function subscribe(SubscribeRequest $request)
     {
-        $attributes->setTopicName($this->topicName);
-        $request = new SubscribeRequest($attributes);
+        $request->setTopicName($this->topicName);
         $response = new SubscribeResponse();
         return $this->client->sendRequest($request, $response);
     }
@@ -72,6 +105,13 @@ class Topic
         return $this->client->sendRequest($request, $response);
     }
 
+    public function ClearSubscriptionFilterTags($subscriptionName)
+    {
+        $request = new ClearSubscriptionFilterTagsRequest($this->topicName, $subscriptionName);
+        $response = new ClearSubscriptionFilterTagsResponse();
+        return $this->client->sendRequest($request, $response);
+    }
+
     public function getSubscriptionAttribute($subscriptionName)
     {
         $request = new GetSubscriptionAttributeRequest($this->topicName, $subscriptionName);
@@ -79,15 +119,14 @@ class Topic
         return $this->client->sendRequest($request, $response);
     }
 
-    public function setSubscriptionAttribute(UpdateSubscriptionAttributes $attributes)
+    public function setSubscriptionAttribute(SetSubscriptionAttributeRequest $request)
     {
-        $attributes->setTopicName($this->topicName);
-        $request = new SetSubscriptionAttributeRequest($attributes);
+        $request->setTopicName($this->topicName);
         $response = new SetSubscriptionAttributeResponse();
         return $this->client->sendRequest($request, $response);
     }
 
-    public function listSubscription($retNum = NULL, $prefix = NULL, $marker = NULL)
+    public function listSubscription($retNum = null, $prefix = null, $marker = null)
     {
         $request = new ListSubscriptionRequest($this->topicName, $retNum, $prefix, $marker);
         $response = new ListSubscriptionResponse();
