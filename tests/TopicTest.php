@@ -26,7 +26,7 @@ class TopicTest extends \PHPUnit\Framework\TestCase
         $this->endPoint = $ini_array["endpoint"] != '<endpoint>' ? $ini_array["endpoint"] : 'https://cmq-topic-bj.api.qcloud.com';
         $this->secretId = $ini_array["secretId"] != '<secretId>' ? $ini_array["secretId"] : getenv('SECRET_ID');
         $this->secretKey = $ini_array["secretKey"] != '<secretKey>' ? $ini_array["secretKey"] : getenv('SECRET_KEY');
-        
+
         $this->topicToDelete = [];
         $this->client = new Client($this->endPoint, $this->secretId, $this->secretKey);
     }
