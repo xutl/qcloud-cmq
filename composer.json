@@ -28,14 +28,5 @@
         "psr-4": {
             "XuTL\\QCloud\\Cmq\\Tests\\": "tests/"
         }
-    },
-    "repositories": [
-        {
-            "packagist": false
-        },
-        {
-            "type": "composer",
-            "url": "https://packagist.phpcomposer.com"
-        }
-    ]
+    }
 }
