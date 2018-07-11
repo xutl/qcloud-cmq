@@ -15,5 +15,4 @@ install:
   - composer install
 
 script:
-  - phpunit --coverage-clover=coverage.clover
-
+  - phpunit 
