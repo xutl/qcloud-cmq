@@ -15,7 +15,6 @@ class ReceiveMessageRequest extends BaseRequest
     /**
      * CreateQueueRequest constructor.
      * @param string $queueName
-     * @param int $pollingWaitSeconds
      */
     public function __construct($queueName)
     {

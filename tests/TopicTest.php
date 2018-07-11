@@ -5,7 +5,9 @@ namespace XuTL\QCloud\Cmq\Tests;
 use XuTL\QCloud\Cmq\Client;
 use XuTL\QCloud\Cmq\Exception\CMQException;
 use XuTL\QCloud\Cmq\Requests\CreateTopicRequest;
+use XuTL\QCloud\Cmq\Requests\PublishMessageRequest;
 use XuTL\QCloud\Cmq\Requests\SetTopicAttributeRequest;
+use XuTL\QCloud\Cmq\Requests\SubscribeRequest;
 
 class TopicTest extends \PHPUnit\Framework\TestCase
 {
@@ -99,6 +101,76 @@ class TopicTest extends \PHPUnit\Framework\TestCase
 
         try {
             $res = $topic->setAttribute($request);
+            $this->assertTrue(False, "Should throw TopicNotExistException");
+        } catch (CMQException $e) {
+            $this->assertEquals($e->getCode(), 4000);
+        }
+    }
+
+    public function testSubscribe()
+    {
+        $topicName = 'testSubscribeTopic' . uniqid();
+        $topic = $this->prepareTopic($topicName);
+
+        $subscriptionName = 'testSubscribeSubscription' . uniqid();
+        $request = new SubscribeRequest();
+        $request->setTopicName($topicName);
+        $request->setSubscriptionName($subscriptionName);
+        $request->setProtocol('http');
+        $request->setEndpoint('http://www.baidu.com');
+        $request->setBindingKeys(['bb']);
+
+        try {
+            $topic->subscribe($request);
+        } catch (CMQException $e) {
+            $this->assertTrue(false, $e);
+        }
+
+        try {
+            $request->setNotifyContentFormat('SIMPLIFIED');
+            $res = $topic->subscribe($request);
+            $this->assertTrue(False, "Should throw SubscriptionAlreadyExist");
+        } catch (CMQException $e) {
+            $this->assertEquals($e->getCode(), 4000);
+        }
+
+        $topic->unsubscribe($subscriptionName);
+    }
+
+    public function testPublishMessage()
+    {
+        $topicName = "testPublishMessage" . uniqid();
+        $topic = $this->prepareTopic($topicName);
+
+        $subscriptionName = 'testSubscribeSubscription' . uniqid();
+        $request = new SubscribeRequest();
+        $request->setTopicName($topicName);
+        $request->setSubscriptionName($subscriptionName);
+        $request->setProtocol('http');
+        $request->setEndpoint('http://www.baidu.com');
+        $request->setBindingKeys(['bb']);
+
+        try {
+            $topic->subscribe($request);
+        } catch (CMQException $e) {
+            $this->assertTrue(false, $e);
+        }
+
+        $messageBody = "test";
+        $request = new PublishMessageRequest();
+        $request->setTopicName($topicName);
+        $request->setMsgBody($messageBody);
+
+        try {
+            $res = $topic->publishMessage($request);
+            $this->assertTrue($res->isSucceed());
+        } catch (CMQException $e) {
+            $this->assertTrue(false, $e);
+        }
+
+        $this->client->deleteTopic($topic->getTopicName());
+        try {
+            $res = $topic->publishMessage($request);
             $this->assertTrue(False, "Should throw TopicNotExistException");
         } catch (CMQException $e) {
             $this->assertEquals($e->getCode(), 4000);

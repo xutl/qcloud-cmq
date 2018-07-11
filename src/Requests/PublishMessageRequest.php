@@ -12,6 +12,11 @@ use XuTL\QCloud\Cmq\Http\BaseRequest;
 
 class PublishMessageRequest extends BaseRequest
 {
+    public function __construct()
+    {
+        parent::__construct('PublishMessage');
+    }
+
     /**
      * 设置主题名称
      * @param string $topicName

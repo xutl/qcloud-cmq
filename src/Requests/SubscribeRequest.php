@@ -12,7 +12,7 @@ use XuTL\QCloud\Cmq\Http\BaseRequest;
 
 class SubscribeRequest extends BaseRequest
 {
-    public function __construct(string $action)
+    public function __construct()
     {
         parent::__construct('Subscribe');
     }
