@@ -24,9 +24,9 @@ class QueueTest extends \PHPUnit\Framework\TestCase
     {
         $ini_array = parse_ini_file(__DIR__ . "/cmq.ini");
 
-        $this->endPoint = !empty($ini_array["endpoint"]) ? $ini_array["endpoint"] : 'https://cmq-topic-bj.api.qcloud.com';
-        $this->secretId = !empty($ini_array["secretId"]) ? $ini_array["secretId"] : getenv('SECRET_ID');
-        $this->secretKey = !empty($ini_array["secretKey"]) ? $ini_array["secretKey"] : getenv('SECRET_KEY');
+        $this->endPoint = $ini_array["endpoint"] != '<endpoint>' ? $ini_array["endpoint"] : 'https://cmq-topic-bj.api.qcloud.com';
+        $this->secretId = $ini_array["secretId"] != '<secretId>' ? $ini_array["secretId"] : getenv('SECRET_ID');
+        $this->secretKey = $ini_array["secretKey"] != '<secretKey>' ? $ini_array["secretKey"] : getenv('SECRET_KEY');
 
         $this->queueToDelete = [];
 
