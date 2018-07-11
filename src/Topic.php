@@ -142,7 +142,7 @@ class Topic
     public function listSubscription($retNum = null, $prefix = null, $marker = null)
     {
         $request = new ListSubscriptionRequest($this->topicName, $retNum, $prefix, $marker);
-        $response = new ListSubscriptionResponse();
+        $response = new ListSubscriptionResponse($this->topicName);
         return $this->client->sendRequest($request, $response);
     }
 }

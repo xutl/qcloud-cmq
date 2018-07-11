@@ -12,6 +12,7 @@ use XuTL\QCloud\Cmq\Http\BaseResponse;
 
 class ListSubscriptionResponse extends BaseResponse
 {
+    public $topicName;
     /**
      * @var int
      */
@@ -21,6 +22,20 @@ class ListSubscriptionResponse extends BaseResponse
      * @var array
      */
     public $subscriptionList;
+
+    /**
+     * ListSubscriptionResponse constructor.
+     * @param string $topicName
+     */
+    public function __construct($topicName)
+    {
+        $this->topicName = $topicName;
+    }
+
+    public function getTopicName()
+    {
+        return $this->topicName;
+    }
 
     /**
      * 获取订阅名称列表

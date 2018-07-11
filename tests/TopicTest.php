@@ -281,5 +281,9 @@ class TopicTest extends \PHPUnit\Framework\TestCase
 
         $this->assertTrue($subscriptionName1Found, $subscriptionName1 . " Not Found!");
         $this->assertTrue($subscriptionName2Found, $subscriptionName2 . " Not Found!");
+
+        $topic->unsubscribe($subscriptionName1);
+        $topic->unsubscribe($subscriptionName2);
+
     }
 }
