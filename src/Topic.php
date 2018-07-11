@@ -115,10 +115,14 @@ class Topic
         return $this->client->sendRequest($request, $response);
     }
 
+    /**
+     * @param $subscriptionName
+     * @return Http\BaseResponse|GetSubscriptionAttributeResponse
+     */
     public function getSubscriptionAttribute($subscriptionName)
     {
         $request = new GetSubscriptionAttributeRequest($this->topicName, $subscriptionName);
-        $response = new GetSubscriptionAttributeResponse();
+        $response = new GetSubscriptionAttributeResponse($this->topicName,$subscriptionName);
         return $this->client->sendRequest($request, $response);
     }
 
@@ -129,6 +133,12 @@ class Topic
         return $this->client->sendRequest($request, $response);
     }
 
+    /**
+     * @param null $retNum
+     * @param null $prefix
+     * @param null $marker
+     * @return Http\BaseResponse|ListSubscriptionResponse
+     */
     public function listSubscription($retNum = null, $prefix = null, $marker = null)
     {
         $request = new ListSubscriptionRequest($this->topicName, $retNum, $prefix, $marker);
