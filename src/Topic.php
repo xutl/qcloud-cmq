@@ -65,14 +65,17 @@ class Topic
     public function setAttribute(SetTopicAttributeRequest $request)
     {
         $request->setTopicName($this->topicName);
-        $response = new SetTopicAttributeResponse();
+        $response = new SetTopicAttributeResponse($this->topicName);
         return $this->client->sendRequest($request, $response);
     }
 
+    /**
+     * @return Http\BaseResponse|GetTopicAttributeResponse
+     */
     public function getAttribute()
     {
         $request = new GetTopicAttributeRequest($this->topicName);
-        $response = new GetTopicAttributeResponse();
+        $response = new GetTopicAttributeResponse($this->topicName);
         return $this->client->sendRequest($request, $response);
     }
 

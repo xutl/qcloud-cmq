@@ -44,4 +44,6 @@ class SetTopicAttributeRequest extends BaseRequest
         $this->setParameter('maxMsgSize', $maxMsgSize);
         return $this;
     }
+
+
 }
