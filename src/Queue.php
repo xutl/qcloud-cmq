@@ -166,6 +166,10 @@ class Queue
         return $this->client->sendRequestAsync($request, $response, $callback);
     }
 
+    /**
+     * @param BatchReceiveMessageRequest $request
+     * @return Http\BaseResponse|BatchReceiveMessageResponse
+     */
     public function batchReceiveMessage(BatchReceiveMessageRequest $request)
     {
         $request->setQueueName($this->queueName);
