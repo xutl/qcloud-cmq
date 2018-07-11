@@ -22,9 +22,9 @@ class TopicTest extends \PHPUnit\Framework\TestCase
     public function setUp()
     {
         $ini_array = parse_ini_file(__DIR__ . "/cmq.ini");
-        $this->endPoint = $ini_array["endpoint"];
-        $this->secretId = $ini_array["secretId"];
-        $this->secretKey = $ini_array["secretKey"];
+        $this->endPoint = !empty($ini_array["endpoint"]) ? $ini_array["endpoint"] : getenv('ENDPOINT');
+        $this->secretId = !empty($ini_array["secretId"]) ? $ini_array["secretId"] : getenv('SECRET_ID');
+        $this->secretKey = !empty($ini_array["secretKey"]) ? $ini_array["secretKey"] : getenv('SECRET_KEY');
         $this->topicToDelete = [];
         $this->client = new Client($this->endPoint, $this->secretId, $this->secretKey);
     }
