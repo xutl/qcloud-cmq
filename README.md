@@ -1,5 +1,7 @@
 # qcloud-cmq
 
+这个SDK和阿里云的MNS通用，直接可切换
+
 ## Installation
 
 The preferred way to install this extension is through [composer](http://getcomposer.org/download/).

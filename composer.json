@@ -1,24 +1,41 @@
 {
-  "name": "xutl/qcloud-cmq",
-  "description": "Qcloud CMQ php sdk",
-  "keywords": [
-    "qcloud",
-    "sdk"
-  ],
-  "type": "library",
-  "license": "MIT",
-  "authors": [
-    {
-      "name": "XuTL",
-      "email": "xutongle@gmail.com"
-    }
-  ],
-  "require": {
-    "guzzlehttp/guzzle": "~6.0"
-  },
-  "autoload": {
-    "psr-4": {
-      "XuTL\\QCloud\\Cmq\\": "src"
-    }
-  }
+    "name": "xutl/qcloud-cmq",
+    "description": "Qcloud CMQ php sdk",
+    "keywords": [
+        "qcloud",
+        "sdk"
+    ],
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "XuTL",
+            "email": "xutongle@gmail.com"
+        }
+    ],
+    "require": {
+        "guzzlehttp/guzzle": "~6.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "~7.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "XuTL\\QCloud\\Cmq\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "XuTL\\QCloud\\Cmq\\Tests\\": "tests/"
+        }
+    },
+    "repositories": [
+        {
+            "packagist": false
+        },
+        {
+            "type": "composer",
+            "url": "https://packagist.phpcomposer.com"
+        }
+    ]
 }
