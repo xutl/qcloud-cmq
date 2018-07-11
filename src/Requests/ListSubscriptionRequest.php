@@ -23,9 +23,9 @@ class ListSubscriptionRequest extends BaseRequest
     {
         parent::__construct('ListSubscriptionByTopic');
         $this->setTopicName($topicName);
-        $this->setSearchWord($searchWord);
-        $this->setOffset($offset);
-        $this->setLimit($limit);
+        if ($searchWord != null) $this->setSearchWord($searchWord);
+        if ($offset != null) $this->setOffset($offset);
+        if ($limit != null) $this->setLimit($limit);
     }
 
     /**

@@ -252,7 +252,7 @@ class TopicTest extends \PHPUnit\Framework\TestCase
     public function testListSubscriptions()
     {
         $topicName = "testListSubscriptionsTopic" . uniqid();
-        $subscriptionNamePrefix = uniqid();
+        $subscriptionNamePrefix = 'aaa'.uniqid();
         $subscriptionName1 = $subscriptionNamePrefix . "testListTopic1";
         $subscriptionName2 = $subscriptionNamePrefix . "testListTopic2";
 
