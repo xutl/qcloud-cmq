@@ -5,8 +5,6 @@ namespace XuTL\QCloud\Cmq\Tests;
 use XuTL\QCloud\Cmq\AsyncCallback;
 use XuTL\QCloud\Cmq\Client;
 use XuTL\QCloud\Cmq\Exception\CMQException;
-use XuTL\QCloud\Cmq\Http\BaseResponse;
-use XuTL\QCloud\Cmq\Http\Promise;
 use XuTL\QCloud\Cmq\Requests\CreateQueueRequest;
 use XuTL\QCloud\Cmq\Requests\CreateTopicRequest;
 use XuTL\QCloud\Cmq\Requests\ListQueueRequest;

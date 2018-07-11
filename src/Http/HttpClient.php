@@ -12,7 +12,7 @@ use XuTL\QCloud\Cmq\Config;
 use Psr\Http\Message\ResponseInterface;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Exception\TransferException;
-use XuTL\QCloud\Cmq\Exception\CmqException;
+use XuTL\QCloud\Cmq\Exception\CMQException;
 
 /**
  * Class HttpClient

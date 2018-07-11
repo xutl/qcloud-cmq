@@ -11,7 +11,7 @@ use RuntimeException;
 
 /**
  * Class CmqException
- * @package XuTL\QCloud\Cmq\CmqException
+ * @package XuTL\QCloud\Cmq\Exception
  */
 class CMQException extends RuntimeException
 {

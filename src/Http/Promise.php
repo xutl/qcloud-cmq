@@ -10,7 +10,7 @@ namespace XuTL\QCloud\Cmq\Http;
 use GuzzleHttp\Promise\PromiseInterface;
 use GuzzleHttp\Exception\TransferException;
 use Psr\Http\Message\ResponseInterface;
-use XuTL\QCloud\Cmq\Exception\CmqException;
+use XuTL\QCloud\Cmq\Exception\CMQException;
 
 /**
  * Class Promise
