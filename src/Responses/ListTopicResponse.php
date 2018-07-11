@@ -13,5 +13,8 @@ use XuTL\QCloud\Cmq\Http\BaseResponse;
 class ListTopicResponse extends BaseResponse
 {
     public $totalCount;
+
     public $topicList;
+
+
 }
