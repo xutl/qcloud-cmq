@@ -7,17 +7,14 @@
 
 namespace XuTL\QCloud\Cmq\Responses;
 
-
 use XuTL\QCloud\Cmq\Http\BaseResponse;
+use XuTL\QCloud\Cmq\Traits\MessagePropertiesForReceive;
 
+/**
+ * Class ReceiveMessageResponse
+ * @package XuTL\QCloud\Cmq\Responses
+ */
 class ReceiveMessageResponse extends BaseResponse
 {
-
-    public $msgId;
-    public $receiptHandle;
-    public $msgBody;
-    public $enqueueTime;
-    public $nextVisibleTime;
-    public $firstDequeueTime;
-    public $dequeueCount;
+    use MessagePropertiesForReceive;
 }
