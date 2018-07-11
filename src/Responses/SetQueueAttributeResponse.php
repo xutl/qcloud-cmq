@@ -12,5 +12,4 @@ use XuTL\QCloud\Cmq\Http\BaseResponse;
 
 class SetQueueAttributeResponse extends BaseResponse
 {
-
 }

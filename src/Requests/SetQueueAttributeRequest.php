@@ -24,7 +24,7 @@ class SetQueueAttributeRequest extends BaseRequest
      */
     public function __construct($queueName)
     {
-        parent::__construct('CreateQueue');
+        parent::__construct('SetQueueAttributes');
         $this->setQueueName($queueName);
         $this->queueName = $queueName;
     }

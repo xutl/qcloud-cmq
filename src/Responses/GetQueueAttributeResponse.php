@@ -27,4 +27,19 @@ class GetQueueAttributeResponse extends BaseResponse
     public $createTime;
     public $queueName;
     public $queueId;
+
+    public function getVisibilityTimeout()
+    {
+        return $this->visibilityTimeout;
+    }
+
+    public function getQueueName()
+    {
+        return $this->queueName;
+    }
+
+    public function getRewindEnabled()
+    {
+        return $this->rewindSeconds > 0;
+    }
 }
