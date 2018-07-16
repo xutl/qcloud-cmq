@@ -12,8 +12,19 @@ use XuTL\QCloud\Cmq\Http\BaseResponse;
 
 class GetQueueAttributeResponse extends BaseResponse
 {
+    /**
+     * @var int
+     */
     public $maxMsgHeapNum;
+
+    /**
+     * @var int
+     */
     public $pollingWaitSeconds;
+
+    /**
+     * @var int
+     */
     public $visibilityTimeout;
     public $maxMsgSize;
     public $msgRetentionSeconds;
@@ -25,19 +36,36 @@ class GetQueueAttributeResponse extends BaseResponse
     public $activeMsgNum;
     public $lastModifyTime;
     public $createTime;
+
+    /**
+     * @var string
+     */
     public $queueName;
+
+    /**
+     * @var string
+     */
     public $queueId;
 
+    /**
+     * @return int
+     */
     public function getVisibilityTimeout()
     {
         return $this->visibilityTimeout;
     }
 
+    /**
+     * @return string
+     */
     public function getQueueName()
     {
         return $this->queueName;
     }
 
+    /**
+     * @return bool
+     */
     public function getRewindEnabled()
     {
         return $this->rewindSeconds > 0;

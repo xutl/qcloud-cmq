@@ -10,6 +10,10 @@ namespace XuTL\QCloud\Cmq\Responses;
 
 use XuTL\QCloud\Cmq\Http\BaseResponse;
 
+/**
+ * Class BatchDeleteMessageResponse
+ * @package XuTL\QCloud\Cmq\Responses
+ */
 class BatchDeleteMessageResponse extends BaseResponse
 {
     public $errorList;

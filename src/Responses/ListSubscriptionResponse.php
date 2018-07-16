@@ -12,7 +12,11 @@ use XuTL\QCloud\Cmq\Http\BaseResponse;
 
 class ListSubscriptionResponse extends BaseResponse
 {
+    /**
+     * @var string
+     */
     public $topicName;
+
     /**
      * @var int
      */
@@ -32,6 +36,9 @@ class ListSubscriptionResponse extends BaseResponse
         $this->topicName = $topicName;
     }
 
+    /**
+     * @return string
+     */
     public function getTopicName()
     {
         return $this->topicName;

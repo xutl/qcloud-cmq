@@ -7,9 +7,12 @@
 
 namespace XuTL\QCloud\Cmq\Responses;
 
-
 use XuTL\QCloud\Cmq\Http\BaseResponse;
 
+/**
+ * Class SetQueueAttributeResponse
+ * @package XuTL\QCloud\Cmq\Responses
+ */
 class SetQueueAttributeResponse extends BaseResponse
 {
 }

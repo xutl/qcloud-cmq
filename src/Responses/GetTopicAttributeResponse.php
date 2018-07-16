@@ -12,8 +12,14 @@ use XuTL\QCloud\Cmq\Http\BaseResponse;
 
 class GetTopicAttributeResponse extends BaseResponse
 {
+    /**
+     * @var string
+     */
     public $topicName;
 
+    /**
+     * @var int
+     */
     public $maxMsgSize;
 
     /**
@@ -25,11 +31,17 @@ class GetTopicAttributeResponse extends BaseResponse
         $this->topicName = $topicName;
     }
 
+    /**
+     * @return string
+     */
     public function getTopicName()
     {
         return $this->topicName;
     }
 
+    /**
+     * @return int
+     */
     public function getMaxMsgSize()
     {
         return $this->maxMsgSize;

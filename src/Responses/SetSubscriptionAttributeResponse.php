@@ -7,9 +7,12 @@
 
 namespace XuTL\QCloud\Cmq\Responses;
 
-
 use XuTL\QCloud\Cmq\Http\BaseResponse;
 
+/**
+ * Class SetSubscriptionAttributeResponse
+ * @package XuTL\QCloud\Cmq\Responses
+ */
 class SetSubscriptionAttributeResponse extends BaseResponse
 {
 

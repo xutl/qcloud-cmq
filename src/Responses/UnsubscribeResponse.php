@@ -7,9 +7,12 @@
 
 namespace XuTL\QCloud\Cmq\Responses;
 
-
 use XuTL\QCloud\Cmq\Http\BaseResponse;
 
+/**
+ * Class UnsubscribeResponse
+ * @package XuTL\QCloud\Cmq\Responses
+ */
 class UnsubscribeResponse extends BaseResponse
 {
 

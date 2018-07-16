@@ -7,9 +7,12 @@
 
 namespace XuTL\QCloud\Cmq\Responses;
 
-
 use XuTL\QCloud\Cmq\Http\BaseResponse;
 
+/**
+ * Class RewindQueueResponse
+ * @package XuTL\QCloud\Cmq\Responses
+ */
 class RewindQueueResponse extends BaseResponse
 {
 
