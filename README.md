@@ -40,3 +40,8 @@ try {
 }
 
 ```
+
+## For Laravel
+
+[xutl/laravel-qcloud-cmq-queue](https://github.com/xutl/laravel-qcloud-cmq-queue)
+
