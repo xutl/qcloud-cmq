@@ -62,18 +62,28 @@ abstract class BaseResponse
             throw new CMQServerNetworkException($response->getStatusCode(), $response->getHeaders(), $response->getBody()->getContents());
         }
         $content = \GuzzleHttp\json_decode($response->getBody()->getContents(), true);
-        if ($content['code'] != 0) {
-            $this->succeed = false;
-            throw new CMQServerException($content['message'], $content['requestId'] ?? '', $content['code'], $content);
-        }
-        $this->succeed = true;
-        foreach ($content as $name => $value) {
-            if (property_exists($this, $name)) {
-                $this->{$name} = $value;
-            } else {
-                $this->_content[$name] = $value;
+        if ($content['code'] == 0) {
+            $this->succeed = true;
+            foreach ($content as $name => $value) {
+                if (property_exists($this, $name)) {
+                    $this->{$name} = $value;
+                } else {
+                    $this->_content[$name] = $value;
+                }
             }
+        } else {
+            $this->unwrapErrorResponse($content);
         }
+    }
+
+    /**
+     * 解析错误的响应
+     * @param array $content
+     */
+    public function unwrapErrorResponse($content)
+    {
+        $this->succeed = false;
+        throw new CMQServerException($content['message'], $content['requestId'] ?? '', $content['code'], $content);
     }
 
     /**
