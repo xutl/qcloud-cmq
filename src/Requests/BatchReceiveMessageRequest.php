@@ -14,10 +14,14 @@ class BatchReceiveMessageRequest extends BaseRequest
 {
     /**
      * BatchPublishMessageRequest constructor.
+     * @param string $queueName
+     * @param int $numOfMsg
      */
-    public function __construct()
+    public function __construct($queueName, $numOfMsg = null)
     {
         parent::__construct('BatchReceiveMessage');
+        $this->setQueueName($queueName);
+        $this->setNumOfMsg($numOfMsg);
     }
 
     /**
@@ -38,7 +42,7 @@ class BatchReceiveMessageRequest extends BaseRequest
      */
     public function setNumOfMsg($numOfMsg)
     {
-        if ($numOfMsg > 16) $numOfMsg = 16;
+        if ($numOfMsg > 16 || $numOfMsg = null) $numOfMsg = 16;
         $this->setParameter('numOfMsg', $numOfMsg);
         return $this;
     }

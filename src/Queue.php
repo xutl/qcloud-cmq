@@ -136,6 +136,12 @@ class Queue
         return $this->client->sendRequest($request, $response);
     }
 
+    /**
+     * 异步批量发送消息
+     * @param BatchSendMessageRequest $request
+     * @param AsyncCallback|null $callback
+     * @return Http\Promise
+     */
     public function batchSendMessageAsync(BatchSendMessageRequest $request, AsyncCallback $callback = null)
     {
         $request->setQueueName($this->queueName);
@@ -144,7 +150,8 @@ class Queue
     }
 
     /**
-     * @param null $waitSeconds
+     * 消费消息
+     * @param int $waitSeconds
      * @return Http\BaseResponse|ReceiveMessageResponse
      */
     public function receiveMessage($waitSeconds = null)
@@ -156,6 +163,7 @@ class Queue
     }
 
     /**
+     * 异步消费消息
      * @param AsyncCallback|NULL $callback
      * @return Http\Promise
      */
@@ -167,19 +175,25 @@ class Queue
     }
 
     /**
-     * @param BatchReceiveMessageRequest $request
+     * @param int $numOfMessages
      * @return Http\BaseResponse|BatchReceiveMessageResponse
      */
-    public function batchReceiveMessage(BatchReceiveMessageRequest $request)
+    public function batchReceiveMessage($numOfMessages)
     {
-        $request->setQueueName($this->queueName);
+        $request = new BatchReceiveMessageRequest($this->queueName, $numOfMessages);
         $response = new BatchReceiveMessageResponse();
         return $this->client->sendRequest($request, $response);
     }
 
-    public function batchReceiveMessageAsync(BatchReceiveMessageRequest $request, AsyncCallback $callback = NULL)
+    /**
+     * 异步批量消费消息
+     * @param int $numOfMessages
+     * @param AsyncCallback|NULL $callback
+     * @return Http\Promise
+     */
+    public function batchReceiveMessageAsync($numOfMessages, AsyncCallback $callback = NULL)
     {
-        $request->setQueueName($this->queueName);
+        $request = new BatchReceiveMessageRequest($this->queueName, $numOfMessages);
         return $this->client->sendRequestAsync($request, $response, $callback);
     }
 
