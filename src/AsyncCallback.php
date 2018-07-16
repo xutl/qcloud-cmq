@@ -38,11 +38,19 @@ class AsyncCallback
         $this->failedCallback = $failedCallback;
     }
 
+    /**
+     * @param BaseResponse $result
+     * @return mixed
+     */
     public function onSucceed(BaseResponse $result)
     {
         return call_user_func($this->succeedCallback, $result);
     }
 
+    /**
+     * @param CMQException $e
+     * @return mixed
+     */
     public function onFailed(CMQException $e)
     {
         return call_user_func($this->failedCallback, $e);

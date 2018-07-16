@@ -4,7 +4,9 @@
 支持 同步 异步模式。
 
 [![Build Status](https://travis-ci.org/xutl/qcloud-cmq.svg?branch=master)](https://travis-ci.org/xutl/qcloud-cmq)
-
+[![License](https://poser.pugx.org/xutl/qcloud-cmq/license.svg)](https://packagist.org/packages/xutl/qcloud-cmq)
+[![Latest Stable Version](https://poser.pugx.org/xutl/qcloud-cmq/v/stable.png)](https://packagist.org/packages/xutl/qcloud-cmq)
+[![Total Downloads](https://poser.pugx.org/xutl/qcloud-cmq/downloads.png)](https://packagist.org/packages/xutl/qcloud-cmq)
 ## Installation
 
 The preferred way to install this extension is through [composer](http://getcomposer.org/download/).
