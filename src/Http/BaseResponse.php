@@ -12,7 +12,7 @@ use XuTL\QCloud\Cmq\Exception\CMQServerException;
 use XuTL\QCloud\Cmq\Exception\CMQServerNetworkException;
 
 /**
- * Class BaseResponse
+ * 响应基类
  * @package XuTL\QCloud\Cmq\Http
  */
 abstract class BaseResponse
@@ -22,16 +22,34 @@ abstract class BaseResponse
      */
     protected $succeed;
 
+    /**
+     * @var int
+     */
     protected $code;
 
+    /**
+     * @var string
+     */
     protected $message;
 
+    /**
+     * @var string
+     */
     protected $requestId;
 
+    /**
+     * @var string
+     */
     protected $codeDesc;
 
+    /**
+     * @var string
+     */
     public $clientRequestId;
 
+    /**
+     * @var array
+     */
     protected $_content = [];
 
     /**
@@ -66,6 +84,9 @@ abstract class BaseResponse
         return $this->succeed;
     }
 
+    /**
+     * @return array
+     */
     public function getContent()
     {
         return $this->_content;
