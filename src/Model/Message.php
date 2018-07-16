@@ -15,9 +15,18 @@ use XuTL\QCloud\Cmq\Traits\MessagePropertiesForReceive;
  */
 class Message
 {
-
     use MessagePropertiesForReceive;
 
+    /**
+     * Message constructor.
+     * @param string $msgId
+     * @param string $msgBody
+     * @param int $enqueueTime
+     * @param int $nextVisibleTime
+     * @param int $firstDequeueTime
+     * @param int $dequeueCount
+     * @param string $receiptHandle
+     */
     public function __construct($msgId, $msgBody, $enqueueTime, $nextVisibleTime, $firstDequeueTime, $dequeueCount, $receiptHandle)
     {
         $this->msgId = $msgId;
