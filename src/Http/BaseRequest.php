@@ -13,6 +13,10 @@ namespace XuTL\QCloud\Cmq\Http;
  */
 abstract class BaseRequest
 {
+    /**
+     * Api参数
+     * @var array
+     */
     private $parameter = [];
 
     /**
@@ -46,6 +50,6 @@ abstract class BaseRequest
      */
     public function getParameters()
     {
-        return $this->parameter;
+        return array_filter($this->parameter);
     }
 }
