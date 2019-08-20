@@ -42,7 +42,7 @@ class BatchReceiveMessageRequest extends BaseRequest
      */
     public function setNumOfMsg($numOfMsg)
     {
-        if ($numOfMsg > 16 || $numOfMsg = null) $numOfMsg = 16;
+        if ($numOfMsg > 16 || $numOfMsg == null) $numOfMsg = 16;
         $this->setParameter('numOfMsg', $numOfMsg);
         return $this;
     }
